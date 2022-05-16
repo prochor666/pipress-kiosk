@@ -1,6 +1,6 @@
-# Control v3
+# Smart device / Mirror v2
 
-Mirror web kiosk client in vue3
+Smart device / Mirror web kiosk client in vue3
 ## Setup
 
 ```sh
