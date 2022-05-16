@@ -1,6 +1,6 @@
 # Control v3
 
-CTRL web client in vue3
+Mirror web kiosk client in vue3
 ## Setup
 
 ```sh
