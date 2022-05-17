@@ -7,7 +7,7 @@
         </div>
 
         <div class="p-1" v-for="currency in currencies" :key="currency.code">
-            <div class="text-2xl">
+            <div class="text-xl">
                 {{ currency.code }} {{ currency.rate }} {{ config.czk }}
             </div>
         </div>

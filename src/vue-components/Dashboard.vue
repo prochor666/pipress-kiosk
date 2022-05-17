@@ -5,16 +5,22 @@
 
         <div class="w-screen h-screen max-h-screen min-h-screen font-sans">
 
-            <div class="p-0 h-[20%]">
+            <div class="p-0 h-[10%] border border-lime-600">
+
+                <Clock :lang="data.lang" />
+            </div>
+
+            <div class="p-0 h-[15%] border border-rose-600">
+
+                <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
+            </div>
+
+            <div class="p-0 h-[15%] border border-teal-600">
 
                 <Currencies :currencies="data.currencies" :lang="data.lang" :key="hashes.currencies" />
             </div>
 
-            <div class="p-0 h-[20%]">
-
-                <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
-            </div>
-            <div class="p-0 h-[60%]">
+            <div class="p-0 h-[60%] border border-sky-600">
 
                 <VideoPlayer :media="data.media" :lang="data.lang" :key="hashes.media" />
             </div>
@@ -27,8 +33,8 @@
 <script>
 import { ref, reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import useApi from '../composables/use-api.js';
 import VideoPlayer from '../vue-components/VideoPlayer.vue';
+import Clock from '../vue-components/Clock.vue';
 import Currencies from '../vue-components/Currencies.vue';
 import Weather from '../vue-components/Weather.vue';
 import apiWorker from '../api.worker.js?worker';
@@ -38,14 +44,10 @@ const svc = new apiWorker();
 
 export default {
     components: {
+        Clock,
         Currencies,
         VideoPlayer,
         Weather,
-    },
-
-    methods: {
-
-
     },
 
     async setup() {

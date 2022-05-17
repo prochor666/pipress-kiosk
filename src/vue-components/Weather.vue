@@ -1,28 +1,28 @@
 <template>
-    <div class="p-0">
-        <div class="grid grid-cols-1 gap-4 text-gray-400 text-center">
-            <div class="w-full block" v-if="weather.main">
+    <div class="text-gray-400 w-full min-h-full flex flex-col justify-center content-center" v-if="weather.main">
 
-                <div class="text-2xl lg:text-4xl py-4">
-                    {{ config.title }}
-                </div>
+        <div class="text-center">
 
-                <div class="text-3xl">
-                    {{ weather.main.temp }} <span v-html="config.tempUnit"></span> / {{ weather.main.feels_like }} <span v-html="config.tempUnit"></span>
-                </div>
-
-                <div class="capitalize text-3xl">
-                    <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`" class="inline" />
-                    {{ weather.weather[0].description }}
-                </div>
-
-                <div class="text-3xl">
-                    {{ config.pressure }}: {{ weather.main.pressure }} {{ config.pressureUnit }}
-                    <span :style="`color: ${getRandomColor()}`">&bull;</span>
-                   {{ config.humidity }}: {{ weather.main.humidity }} %
-                </div>
-
+            <div class="inline-block text-4xl">
+                {{ config.title }}
             </div>
+
+            <div class="text-3xl pt-3 pb-1">
+                {{ weather.main.temp }} <span v-html="config.tempUnit"></span> / {{ weather.main.feels_like }} <span v-html="config.tempUnit"></span>
+            </div>
+
+            <div class="capitalize text-3xl">
+                <div class="inline-block h-10 py-2">
+                    <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`" class="-mt-3 inline" /> <span class="inline-block h-10">{{ weather.weather[0].description }}</span>
+                </div>
+            </div>
+
+            <div class="text-3xl pt-3">
+                {{ config.pressure }}: {{ weather.main.pressure }} {{ config.pressureUnit }}
+                <span :style="`color: ${getRandomColor()}`">&bull;</span>
+                {{ config.humidity }}: {{ weather.main.humidity }} %
+            </div>
+
         </div>
     </div>
 </template>
