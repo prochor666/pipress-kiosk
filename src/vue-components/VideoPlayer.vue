@@ -6,7 +6,6 @@
 
 <script>
 import { ref } from 'vue';
-import { useRoute } from 'vue-router';
 
 export default {
     components: {
@@ -24,8 +23,6 @@ export default {
     },
 
     async setup(props, { emit }) {
-        const route = useRoute();
-        const apiUrl = route.meta.apiUrl;
         const media = props.media;
         const index = ref(0);
         const video = ref(media[0]);
@@ -41,7 +38,6 @@ export default {
         console.log(`Current video ${video.value}`, media);
 
         return {
-            apiUrl,
             nextVideo,
             video,
         };

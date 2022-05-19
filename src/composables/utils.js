@@ -6,6 +6,12 @@ export const utils = function () {
     };
 
 
+    const copyData = function (data) {
+
+        return JSON.parse(JSON.stringify(data));
+    };
+
+
     const formatBytes = function (bytes, decimals = 2) {
 
         if (bytes === 0) {
@@ -35,6 +41,22 @@ export const utils = function () {
     };
 
 
+    const getRndKey = function () {
+
+        return (Math.random() + 1).toString(36).substring(7);
+    };
+
+
+    const getRandomColor = function () {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+
     const keeper = function (key, value = false) {
 
         if (value === false) {
@@ -49,10 +71,13 @@ export const utils = function () {
 
     return {
         sleep,
+        copyData,
         keeper,
         decodePath,
         encodePath,
         formatBytes,
+        getRndKey,
+        getRandomColor,
     }
 }
 

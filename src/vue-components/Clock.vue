@@ -2,13 +2,15 @@
 <template>
     <div class="text-gray-400 w-full min-h-full flex flex-col justify-center content-center">
 
-        <div class="text-5xl font-medium text-center">
-            <div class="inline-block p-1 w-20 text-center">{{ clock.hours }}</div>
-            <div class="inline-block p-1 w-20 text-center">{{ clock.minutes }}</div>
-            <div class="inline-block p-1 w-20 text-center">{{ clock.seconds }}</div>
+        <div class="text-5xl text-center">
+            <div class="inline-block p-1 w-16 text-center">{{ clock.hours }}</div>
+            <div class="inline-block p-1 w-5 text-center">:</div>
+            <div class="inline-block p-1 w-16 text-center">{{ clock.minutes }}</div>
+            <div class="inline-block p-1 w-5 text-center">:</div>
+            <div class="inline-block p-1 w-16 text-center">{{ clock.seconds }}</div>
         </div>
 
-        <div class="text-4xl font-medium text-center">
+        <div class="text-3xl font-medium text-center">
             <div class="inline-block py-4 mx-auto">
                 {{ clock.dayOfWeek }}, {{ clock.day }}. {{ clock.month }}
             </div>
@@ -18,7 +20,7 @@
 </template>
 
 <script>
-import { reactive, onMounted } from 'vue';
+import { reactive } from 'vue';
 
 export default {
     props: {
@@ -30,10 +32,9 @@ export default {
 
     async setup(props) {
 
-        const lang = props.lang
+        const lang = props.lang;
 
         const config = {
-            lang: 'cs',
             cs : {
                 days: ['Neděle','Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota'],
                 months: ['leden', 'únor', 'březen', 'duben', 'květen', 'červen', 'červenec', 'srpen', 'září', 'říjen', 'listopad', 'prosinec'],
@@ -43,7 +44,7 @@ export default {
                 days: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
                 months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             },
-        }
+        };
 
         const clock = reactive({
             hours: 0,
@@ -52,7 +53,7 @@ export default {
             month: '',
             day: '',
             dayOfWeek: '',
-        })
+        });
 
         const setClock = () => {
             const date = new Date();
@@ -70,7 +71,7 @@ export default {
             clock.dayOfWeek = config[lang].days[_dayOfWeek];
         }
 
-        setInterval(() => setClock(), 1000)
+        setInterval(() => setClock(), 1000);
 
         return {
             clock,

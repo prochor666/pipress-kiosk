@@ -8,7 +8,9 @@
             </div>
 
             <div class="text-3xl pt-3 pb-1">
-                {{ weather.main.temp }} <span v-html="config.tempUnit"></span> / {{ weather.main.feels_like }} <span v-html="config.tempUnit"></span>
+                {{ config.temp }}: {{ weather.main.temp }} <span v-html="config.tempUnit"></span>
+                <span :style="`color: ${getRandomColor()}`" class="ml-3 mr-2">&bull;</span>
+                {{ config.feels_like }}: {{ weather.main.feels_like }} <span v-html="config.tempUnit"></span>
             </div>
 
             <div class="capitalize text-3xl">
@@ -19,7 +21,7 @@
 
             <div class="text-3xl pt-3">
                 {{ config.pressure }}: {{ weather.main.pressure }} {{ config.pressureUnit }}
-                <span :style="`color: ${getRandomColor()}`">&bull;</span>
+                <span :style="`color: ${getRandomColor()}`" class="mx-3">&bull;</span>
                 {{ config.humidity }}: {{ weather.main.humidity }} %
             </div>
 
@@ -28,8 +30,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import utils from '../composables/utils';
 
 export default {
     components: {
@@ -47,8 +48,6 @@ export default {
     },
 
     async setup(props, { emit }) {
-        const route = useRoute();
-        const apiUrl = route.meta.apiUrl;
         const weather = props.weather;
         const lang = props.lang;
 
@@ -58,6 +57,7 @@ export default {
                 weatherUrlFix: 'cz',
                 units: 'metric',
                 temp: 'Teplota',
+                feels_like: 'Pocitová',
                 pressure: 'Tlak',
                 humidity: 'Vlhkost',
                 wind: 'Vítr',
@@ -72,6 +72,7 @@ export default {
                 weatherUrlFix: 'en',
                 units: 'imperial',
                 temp: 'Temperature',
+                feels_like: 'Feels like',
                 pressure: 'Pressure',
                 humidity: 'Humidity',
                 wind: 'Vind speed',
@@ -82,20 +83,12 @@ export default {
             },
         };
 
-        const getRandomColor = function() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-              color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
+
 
         return {
-            apiUrl,
             weather,
             config: config[lang],
-            getRandomColor,
+            getRandomColor: utils().getRandomColor,
         };
     },
 };

@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { reactive } from 'vue';
 
 export const useApi = function() {
 
@@ -8,6 +7,7 @@ export const useApi = function() {
         try {
 
             const data = {
+                clock: {},
                 media: [],
                 currencies: {},
                 weather: {},
@@ -31,6 +31,7 @@ export const useApi = function() {
                         orientation: orientation = 'vertical',
                         widgets: widgets = [],
                         data: {
+                            clock: clock = {},
                             media: media = {},
                             currencies: currencies = {},
                             weather: weather = {},
@@ -39,6 +40,10 @@ export const useApi = function() {
                     ...rest
                 } = result.data;
 
+                if (clock) {
+
+                    data.clock = clock;
+                }
                 if (media) {
 
                     data.media = media;

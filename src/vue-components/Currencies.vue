@@ -16,8 +16,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { useRoute } from 'vue-router';
+import utils from '../composables/utils';
 
 export default {
     components: {
@@ -35,9 +34,6 @@ export default {
     },
 
     async setup(props, { emit }) {
-        const route = useRoute();
-        const apiUrl = route.meta.apiUrl;
-
         const lang = props.lang;
         let allCurrencies = props.currencies;
         const currencies = [];
@@ -63,7 +59,7 @@ export default {
 
             if ((config[lang].currencies).includes(currency)) {
 
-                currencies.push(JSON.parse(JSON.stringify(allCurrencies[currency])));
+                currencies.push(utils().copyData(allCurrencies[currency]));
             }
         }
 
@@ -71,7 +67,6 @@ export default {
         console.log('Currency filtered', currencies)
 
         return {
-            apiUrl,
             currencies,
             config: config[lang],
         };

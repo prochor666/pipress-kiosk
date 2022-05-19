@@ -5,22 +5,23 @@
 
         <div class="w-screen h-screen max-h-screen min-h-screen font-sans">
 
-            <div class="p-0 h-[10%] border border-lime-600">
-
-                <Clock :lang="data.lang" />
+            <div class="p-0 h-[10%]">
+                <span class="absolute right-8 top-8 inline-flex h-1 w-1 rounded-full bg-sky-800 "></span>
+                <span class="animate-ping absolute right-7 top-7 inline-flex h-3 w-3 rounded-full bg-sky-600 opacity-75"></span>
+                <Clock :lang="data.lang" :key="hashes.clock" />
             </div>
 
-            <div class="p-0 h-[15%] border border-rose-600">
+            <div class="p-0 h-[15%]">
 
                 <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
             </div>
 
-            <div class="p-0 h-[15%] border border-teal-600">
+            <div class="p-0 h-[15%]">
 
                 <Currencies :currencies="data.currencies" :lang="data.lang" :key="hashes.currencies" />
             </div>
 
-            <div class="p-0 h-[60%] border border-sky-600">
+            <div class="p-0 h-[60%]">
 
                 <VideoPlayer :media="data.media" :lang="data.lang" :key="hashes.media" />
             </div>
@@ -39,6 +40,7 @@ import Currencies from '../vue-components/Currencies.vue';
 import Weather from '../vue-components/Weather.vue';
 import apiWorker from '../api.worker.js?worker';
 import objectHash from 'object-hash';
+import utils from '../composables/utils';
 
 const svc = new apiWorker();
 
@@ -57,7 +59,25 @@ export default {
         // Initialize worker
         svc.postMessage(apiUrl);
 
-        const detectChanges = async (data) => {
+        const data = reactive({
+            clock: { ready: false },
+            media: [],
+            currencies: {},
+            weather: {},
+            index: 0,
+            video: '',
+            rest: {},
+            lang: 'en',
+        });
+
+        const hashes = {
+            clock: objectHash(data.clock),
+            currencies: objectHash(data.currencies),
+            weather: objectHash(data.weather),
+            media: objectHash(data.media),
+        };
+
+        const detectChanges = async (hashes, data) => {
 
             let changed = false;
 
@@ -80,16 +100,6 @@ export default {
             return changed;
         }
 
-        const data = reactive({
-            media: [],
-            currencies: {},
-            weather: {},
-            index: 0,
-            video: '',
-            rest: {},
-            lang: 'en',
-        });
-
         const update = async (preflightData) => {
 
             for (let i in preflightData) {
@@ -99,17 +109,14 @@ export default {
             console.log('Worker used', data);
         }
 
-        const hashes = {
-            currencies: objectHash(data.currencies),
-            weather: objectHash(data.weather),
-            media: objectHash(data.media),
-        };
-        await detectChanges(data);
+
+        // R
+        await detectChanges(hashes, data);
 
         svc.onmessage = async (e) => {
 
             const preflightData = await e.data,
-                  resultChange = await detectChanges(preflightData);
+                  resultChange = await detectChanges(hashes, preflightData);
 
             if (resultChange === true) {
 
@@ -118,7 +125,8 @@ export default {
             }
 
             setTimeout( function(){
-                svc.postMessage(apiUrl)
+
+                svc.postMessage(apiUrl);
             }, 10000);
         }
 
