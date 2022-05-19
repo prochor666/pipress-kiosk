@@ -21,6 +21,7 @@ router.beforeEach(async (to, from) => {
     const apiUrl = await apiEndpoint();
 
     to.meta.apiUrl = apiUrl;
+    to.meta.appPrefix = 'pipress';
 });
 
 const app = createApp(App);

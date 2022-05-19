@@ -8,20 +8,23 @@
             </div>
 
             <div class="text-3xl pt-3 pb-1">
-                {{ config.temp }}: {{ weather.main.temp }} <span v-html="config.tempUnit"></span>
-                <span :style="`color: ${getRandomColor()}`" class="ml-3 mr-2">&bull;</span>
-                {{ config.feels_like }}: {{ weather.main.feels_like }} <span v-html="config.tempUnit"></span>
+                {{ config.temp }}: {{ Math.round(weather.main.temp) }} <span v-html="config.tempUnit"></span>
+                <span :style="`color: ${getRandomColor()}`" class="ml-3 mr-2 inline-block h-10">&bull;</span>
+                {{ config.feels_like }}: {{ Math.round(weather.main.feels_like) }} <span v-html="config.tempUnit"></span>
             </div>
 
-            <div class="capitalize text-3xl">
+            <div class="text-3xl">
                 <div class="inline-block h-10 py-2">
-                    <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`" class="-mt-3 inline" /> <span class="inline-block h-10">{{ weather.weather[0].description }}</span>
+                    <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`" class="-mt-2 inline" />
+                    <span class="capitalize inline-block h-10 font-medium">{{ weather.weather[0].description }}</span>
+                    <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-10">&bull;</span>
+                    {{ config.wind }}: {{ weather.wind.speed }} {{ config.windUnit }}
                 </div>
             </div>
 
             <div class="text-3xl pt-3">
                 {{ config.pressure }}: {{ weather.main.pressure }} {{ config.pressureUnit }}
-                <span :style="`color: ${getRandomColor()}`" class="mx-3">&bull;</span>
+                <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-10">&bull;</span>
                 {{ config.humidity }}: {{ weather.main.humidity }} %
             </div>
 

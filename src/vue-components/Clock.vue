@@ -2,17 +2,23 @@
 <template>
     <div class="text-gray-400 w-full min-h-full flex flex-col justify-center content-center">
 
-        <div class="text-5xl text-center">
+        <div class="text-5xl text-center pt-4">
             <div class="inline-block p-1 w-16 text-center">{{ clock.hours }}</div>
-            <div class="inline-block p-1 w-5 text-center">:</div>
+            <div class="inline-block p-1 w-4 text-center">:</div>
             <div class="inline-block p-1 w-16 text-center">{{ clock.minutes }}</div>
-            <div class="inline-block p-1 w-5 text-center">:</div>
+            <div class="inline-block p-1 w-4 text-center">:</div>
             <div class="inline-block p-1 w-16 text-center">{{ clock.seconds }}</div>
         </div>
 
         <div class="text-3xl font-medium text-center">
-            <div class="inline-block py-4 mx-auto">
+            <div class="inline-block pt-2 mx-auto">
                 {{ clock.dayOfWeek }}, {{ clock.day }}. {{ clock.month }}
+            </div>
+        </div>
+
+        <div class="text-2xl font-medium text-center">
+            <div class="inline-block py-3 mx-auto">
+                {{ geo.city }}, {{ geo.location.time_zone }}
             </div>
         </div>
 
@@ -27,12 +33,23 @@ export default {
         lang: {
             type: String,
             default: 'en',
-        }
+        },
+        geo: {
+            type: Object,
+            default: {
+                ip: '',
+                city: '',
+                location: {
+                    time_zone: ''
+                },
+            },
+        },
     },
 
     async setup(props) {
 
         const lang = props.lang;
+        const geo = props.geo;
 
         const config = {
             cs : {
@@ -75,6 +92,7 @@ export default {
 
         return {
             clock,
+            geo,
             config: config[lang],
         }
     },

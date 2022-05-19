@@ -5,25 +5,22 @@
 
         <div class="w-screen h-screen max-h-screen min-h-screen font-sans">
 
-            <div class="p-0 h-[10%]">
-                <span class="absolute right-8 top-8 inline-flex h-1 w-1 rounded-full bg-sky-800 "></span>
-                <span class="animate-ping absolute right-7 top-7 inline-flex h-3 w-3 rounded-full bg-sky-600 opacity-75"></span>
-                <Clock :lang="data.lang" :key="hashes.clock" />
+            <Indicator :beacon="beacon" :key="beacon.key" />
+
+            <div class="p-0 h-[8%]">
+                <Clock :lang="data.lang" :geo="data.rest.geo.geoip" :key="hashes.clock" />
             </div>
 
-            <div class="p-0 h-[15%]">
-
+            <div class="p-0 h-[17%]">
                 <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
             </div>
 
-            <div class="p-0 h-[15%]">
-
-                <Currencies :currencies="data.currencies" :lang="data.lang" :key="hashes.currencies" />
+            <div class="p-0 h-[60%]">
+                <Media :media="data.media" :lang="data.lang" :key="hashes.media" />
             </div>
 
-            <div class="p-0 h-[60%]">
-
-                <VideoPlayer :media="data.media" :lang="data.lang" :key="hashes.media" />
+            <div class="p-0 h-[15%]">
+                <Currencies :currencies="data.currencies" :lang="data.lang" :key="hashes.currencies" />
             </div>
 
         </div>
@@ -32,9 +29,10 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue';
+import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
-import VideoPlayer from '../vue-components/VideoPlayer.vue';
+import Indicator from './Indicator.vue';
+import Media from './Media.vue';
 import Clock from '../vue-components/Clock.vue';
 import Currencies from '../vue-components/Currencies.vue';
 import Weather from '../vue-components/Weather.vue';
@@ -46,15 +44,22 @@ const svc = new apiWorker();
 
 export default {
     components: {
+        Indicator,
         Clock,
         Currencies,
-        VideoPlayer,
+        Media,
         Weather,
     },
 
     async setup() {
         const route = useRoute();
         const apiUrl = route.meta.apiUrl;
+        const appPrefix = route.meta.appPrefix;
+        const beacon = reactive({
+            loading: false,
+            key: utils().getRndKey(),
+            ip: '',
+        });
 
         // Initialize worker
         svc.postMessage(apiUrl);
@@ -66,7 +71,17 @@ export default {
             weather: {},
             index: 0,
             video: '',
-            rest: {},
+            rest: {
+                geo: {
+                    geoip: {
+                        ip: '',
+                        city: '',
+                        location: {
+                            time_zone: '',
+                        },
+                    },
+                },
+            },
             lang: 'en',
         });
 
@@ -84,15 +99,13 @@ export default {
             for(let i in hashes) {
 
                 let newHash = objectHash(data[i]),
-                    oldHash = localStorage.getItem(`${i}Hash`);
-
-                //console.log('Detecting data', newHash, oldHash, data[i]);
+                    oldHash = utils().keeper(`${appPrefix}.${i}Hash`);
 
                 if (newHash !== oldHash) {
 
                     hashes[i] = newHash;
                     console.log(`Saving new hash ${i}`, hashes[i]);
-                    localStorage.setItem(`${i}Hash`, hashes[i]);
+                    utils().keeper(`${appPrefix}.${i}Hash`, hashes[i]);
                     changed = true;
                 }
             }
@@ -106,7 +119,7 @@ export default {
 
                 data[i] = preflightData[i];
             }
-            console.log('Worker used', data);
+            //console.log('Worker used', data);
         }
 
 
@@ -121,17 +134,25 @@ export default {
             if (resultChange === true) {
 
                 await update(preflightData);
-                //console.log('Worker used', data);
             }
 
-            setTimeout( function(){
+            setTimeout( async function(){
 
-                svc.postMessage(apiUrl);
-            }, 10000);
+                beacon.loading = true;
+                beacon.key = utils().getRndKey();
+
+                await svc.postMessage(apiUrl);
+
+                setTimeout(() => {
+                    beacon.loading = false;
+                    beacon.key = utils().getRndKey();
+                }, 3000);
+            }, 20000);
         }
 
         return {
             data,
+            beacon,
             hashes,
         };
     },

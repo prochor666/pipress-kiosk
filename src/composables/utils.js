@@ -47,6 +47,13 @@ export const utils = function () {
     };
 
 
+    const fileExtension = function (filename) {
+
+        const ext = (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) : [''];
+        return ext[0];
+    };
+
+
     const getRandomColor = function () {
         var letters = '0123456789ABCDEF';
         var color = '#';
@@ -78,6 +85,7 @@ export const utils = function () {
         formatBytes,
         getRndKey,
         getRandomColor,
+        fileExtension,
     }
 }
 

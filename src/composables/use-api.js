@@ -13,7 +13,17 @@ export const useApi = function() {
                 weather: {},
                 index: 0,
                 video: '',
-                rest: {},
+                rest: {
+                    geo: {
+                        geoip: {
+                            ip: '',
+                            city: '',
+                            location: {
+                                time_zone: '',
+                            },
+                        },
+                    },
+                },
                 lang: 'en',
             };
 
@@ -72,7 +82,6 @@ export const useApi = function() {
 
                     data.widgets = widgets;
                 }
-                //console.log('Reactive set', data);
 
                 return data;
             }
