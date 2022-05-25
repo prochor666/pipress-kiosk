@@ -66,7 +66,10 @@ export default {
 
         const data = reactive({
             clock: { ready: false },
-            media: [],
+            media: {
+                url: '',
+                files: [],
+            },
             currencies: {},
             weather: {},
             index: 0,

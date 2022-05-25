@@ -8,7 +8,10 @@ export const useApi = function() {
 
             const data = {
                 clock: {},
-                media: [],
+                media: {
+                    url: '',
+                    files: [],
+                },
                 currencies: {},
                 weather: {},
                 index: 0,

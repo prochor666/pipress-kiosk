@@ -15,8 +15,8 @@
 
             <div class="text-3xl">
                 <div class="inline-block h-10 py-2">
-                    <img :src="`https://openweathermap.org/img/wn/${weather.weather[0].icon}.png`" class="-mt-2 inline" />
-                    <span class="capitalize inline-block h-10 font-medium">{{ weather.weather[0].description }}</span>
+                    <img :src="`${local_url}/${weather.weather[0].icon}.svg`" class="-mt-2 inline" />
+                    <span class="inline-block h-10 font-medium">{{ weather.weather[0].description }}</span>
                     <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-10">&bull;</span>
                     {{ config.wind }}: {{ weather.wind.speed }} {{ config.windUnit }}
                 </div>
@@ -53,6 +53,7 @@ export default {
     async setup(props, { emit }) {
         const weather = props.weather;
         const lang = props.lang;
+        const local_url = 'public/weather_icons';
 
         const config = {
             cs : {
@@ -86,12 +87,11 @@ export default {
             },
         };
 
-
-
         return {
             weather,
             config: config[lang],
             getRandomColor: utils().getRandomColor,
+            local_url,
         };
     },
 };

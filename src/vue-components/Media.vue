@@ -1,9 +1,9 @@
 <template>
-    <div class="py-2 text-center flex h-full min-h-full max-h-full" v-if="type === 'video'">
-        <video :src="current" @ended="nextItem()" :key="current" muted autoplay class="mx-auto grow animate-fadein"></video>
+    <div class="py-2 text-center flex h-full min-h-full max-h-full" v-if="type === 'video' && enabled === true">
+        <video :src="`${local_url}/${current}`" @ended="nextItem()" :key="current" muted autoplay class="mx-auto grow animate-fadein"></video>
     </div>
-    <div class="py-2 text-center h-full min-h-full max-h-full" v-if="type === 'image'">
-        <img :src="current" @load="waitForStatic()" :key="current" class="mx-auto object-contain max-h-full animate-fadein">
+    <div class="py-2 text-center h-full min-h-full max-h-full" v-if="type === 'image' && enabled === true">
+        <img :src="`${local_url}/${current}`" @load="waitForStatic()" :key="current" class="mx-auto object-contain max-h-full animate-fadein">
     </div>
 </template>
 
@@ -18,7 +18,10 @@ export default {
     props: {
         media: {
             type: Object,
-            default: [],
+            default: {
+                url: '',
+                files: [],
+            },
         },
         lang: {
             type: String,
@@ -29,7 +32,9 @@ export default {
     async setup(props, { emit }) {
         const media = props.media;
         const index = ref(0);
-        const current = ref(media[0]);
+        const current = props.media.files.length > 0 ? ref(media.files[0].basename): ref('');
+        const local_url = 'public/media';
+        const enabled = media.files.length > 0;
 
         const waitForStatic = function() {
 
@@ -37,11 +42,13 @@ export default {
         };
 
 
+        console.log('Media', media);
+
         const nextItem = function () {
 
-            const max = media.length - 1;
+            const max = media.files.length - 1;
             index.value = index.value + 1 <= max ? index.value + 1: 0;
-            current.value = media[index.value];
+            current.value = media.files[index.value].basename;
             type.value = chooseType(current.value);
             console.log(`Next media item ${current.value}`);
         };
@@ -56,7 +63,7 @@ export default {
                 return 'video';
             }
 
-            if (['jpg','png', 'gif'].includes(mediaType)) {
+            if (['jpg', 'png', 'gif'].includes(mediaType)) {
 
                 return 'image';
             }
@@ -72,6 +79,8 @@ export default {
             waitForStatic,
             current,
             type,
+            local_url,
+            enabled,
         };
     },
 };
