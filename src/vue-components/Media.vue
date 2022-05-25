@@ -41,16 +41,13 @@ export default {
             setTimeout(() => nextItem(), 5000);
         };
 
-
-        console.log('Media', media);
-
         const nextItem = function () {
 
             const max = media.files.length - 1;
             index.value = index.value + 1 <= max ? index.value + 1: 0;
             current.value = media.files[index.value].basename;
             type.value = chooseType(current.value);
-            console.log(`Next media item ${current.value}`);
+            /* console.log(`Next media item ${current.value}`); */
         };
 
 
@@ -72,7 +69,7 @@ export default {
         };
 
         const type = ref(chooseType(current.value));
-        console.log(`Current video ${current.value}`, media);
+        console.log(`Current video ${current.value}`, media.files);
 
         return {
             nextItem,

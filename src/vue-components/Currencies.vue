@@ -70,7 +70,7 @@ export default {
             }
         }
 
-        console.log(`Setting up currences`, filtered);
+        //console.log(`Setting up currences`, filtered);
 
 /*
         for (let currency in allCurrencies) {

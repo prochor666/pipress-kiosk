@@ -5,6 +5,6 @@ import utils from "./composables/utils.js";
 self.addEventListener("message", async ({ data }) => {
 
     const result = await useApi().getDeviceData(data);
-    console.log('Worker result', result);
+    //console.log('Worker result', result);
     self.postMessage(utils().copyData(result));
 });
