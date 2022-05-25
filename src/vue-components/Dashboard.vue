@@ -15,8 +15,12 @@
                 <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
             </div>
 
-            <div class="p-0 h-[60%]">
+            <div class="p-0 h-[60%]" v-if="data.media.files.length > 0">
                 <Media :media="data.media" :lang="data.lang" :key="hashes.media" />
+            </div>
+
+            <div class="p-0 h-[60%]" v-if="data.media.files.length === 0">
+                <Offline />
             </div>
 
             <div class="p-0 h-[15%]">
@@ -32,6 +36,7 @@
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import Indicator from './Indicator.vue';
+import Offline from './Offline.vue';
 import Media from './Media.vue';
 import Clock from '../vue-components/Clock.vue';
 import Currencies from '../vue-components/Currencies.vue';
@@ -49,6 +54,7 @@ export default {
         Currencies,
         Media,
         Weather,
+        Offline,
     },
 
     async setup() {
@@ -60,6 +66,8 @@ export default {
             key: utils().getRndKey(),
             ip: '',
         });
+
+        const offline = true;
 
         // Initialize worker
         svc.postMessage(apiUrl);
@@ -157,6 +165,7 @@ export default {
             data,
             beacon,
             hashes,
+            offline,
         };
     },
 };
