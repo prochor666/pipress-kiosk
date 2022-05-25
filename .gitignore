@@ -3,5 +3,5 @@ node_modules
 dist-ssr
 *.local
 dist
-public/json
-public/media
+public/json/**
+public/media/**
