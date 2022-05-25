@@ -69,7 +69,7 @@ export default {
         };
 
         const type = ref(chooseType(current.value));
-        console.log(`Current video ${current.value}`, media.files);
+        console.log(`Current video ${current.value}`);
 
         return {
             nextItem,
