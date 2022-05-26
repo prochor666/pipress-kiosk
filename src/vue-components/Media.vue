@@ -33,7 +33,7 @@ export default {
         const media = props.media;
         const index = ref(0);
         const current = props.media.files.length > 0 ? ref(media.files[0].basename): ref('');
-        const local_url = 'public/media';
+        const local_url = 'media';
         const enabled = media.files.length > 0;
 
         const waitForStatic = function() {
