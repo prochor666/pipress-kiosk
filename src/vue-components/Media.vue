@@ -1,9 +1,9 @@
 <template>
-    <div class="py-2 text-center flex h-full min-h-full max-h-full" v-if="type === 'video' && enabled === true">
+    <div class="py-2 text-center flex h-full min-h-full max-h-full max-w-screen" v-if="type === 'video' && enabled === true">
         <video :src="`${local_url}/${current}`" @ended="nextItem()" :key="current" muted autoplay class="mx-auto grow animate-fadein"></video>
     </div>
-    <div class="py-2 text-center h-full min-h-full max-h-full" v-if="type === 'image' && enabled === true">
-        <img :src="`${local_url}/${current}`" @load="waitForStatic()" :key="current" class="mx-auto object-contain max-h-full animate-fadein">
+    <div class="py-2 text-center h-full min-h-full max-h-full max-w-screen" v-if="type === 'image' && enabled === true">
+        <img :src="`${local_url}/${current}`" @load="waitForStatic()" :key="current" class="mx-auto object-contain max-h-full max-w-screen animate-fadein">
     </div>
 </template>
 

@@ -6,6 +6,7 @@ module.exports = {
     ],
     darkMode: 'class', // or 'media' or 'class'
     theme: {
+
         extend: {
             zIndex: {
                 '1000': 1000,
@@ -38,6 +39,7 @@ module.exports = {
         },
     },
     plugins: [
-        require('@tailwindcss/forms')
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/aspect-ratio'),
     ],
 };

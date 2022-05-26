@@ -1,38 +1,42 @@
 <template>
 
     <!-- cursor-none -->
-    <main class="p-0 m-0 ">
+    <main class="p-0 m-0 text-center h-screen max-h-screen aspect-[9/16]">
 
-        <div class="w-screen h-screen max-h-screen min-h-screen font-sans">
+        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base">
 
-            <Indicator :beacon="beacon" :key="beacon.key" />
+            <Indicator :beacon="beacon" :offline="data.offline" :key="hashes.offline" />
 
-            <div class="p-0 h-[8%]">
+            <div class="p-0 h-[10%]">
                 <Clock :lang="data.lang" :geo="data.rest.geo.geoip" :key="hashes.clock" />
             </div>
 
-            <div class="p-0 h-[17%]">
+            <div class="p-0 h-[15%]" v-if="data.offline === false">
                 <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
             </div>
 
-            <div class="p-0 h-[60%]" v-if="data.media.files.length > 0">
+            <div class="p-0 h-[20%]" v-if="data.offline === false">
+                <Currencies :currencies="data.currencies" :lang="data.lang" :key="hashes.currencies" />
+            </div>
+
+            <div class="p-0 h-[55%]" v-if="data.offline === false && data.media.files.length > 0">
                 <Media :media="data.media" :lang="data.lang" :key="hashes.media" />
             </div>
 
-            <div class="p-0 h-[60%]" v-if="data.media.files.length === 0">
+            <div class="p-0 h-[55%]" v-if="data.offline === true || data.media.files.length === 0">
                 <Offline />
-            </div>
-
-            <div class="p-0 h-[15%]">
-                <Currencies :currencies="data.currencies" :lang="data.lang" :key="hashes.currencies" />
             </div>
 
         </div>
     </main>
 
+
 </template>
 
 <script>
+document.documentElement.classList.add('vertical');
+
+
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import Indicator from './Indicator.vue';
@@ -67,8 +71,6 @@ export default {
             ip: '',
         });
 
-        const offline = true;
-
         // Initialize worker
         svc.postMessage(apiUrl);
 
@@ -94,14 +96,18 @@ export default {
                 },
             },
             lang: 'en',
+            offline: false,
         });
+
 
         const hashes = {
             clock: objectHash(data.clock),
             currencies: objectHash(data.currencies),
             weather: objectHash(data.weather),
             media: objectHash(data.media),
+            offline: objectHash(data.offline),
         };
+
 
         const detectChanges = async (hashes, data) => {
 
@@ -115,7 +121,7 @@ export default {
                 if (newHash !== oldHash) {
 
                     hashes[i] = newHash;
-                    console.log(`Saving new hash ${i}`, hashes[i]);
+                    //console.log(`Saving new hash ${i}`, hashes[i]);
                     utils().keeper(`${appPrefix}.${i}Hash`, hashes[i]);
                     changed = true;
                 }
@@ -124,13 +130,13 @@ export default {
             return changed;
         }
 
+
         const update = async (preflightData) => {
 
             for (let i in preflightData) {
 
                 data[i] = preflightData[i];
             }
-            //console.log('Worker used', data);
         }
 
 
@@ -142,10 +148,7 @@ export default {
             const preflightData = await e.data,
                   resultChange = await detectChanges(hashes, preflightData);
 
-            if (resultChange === true) {
-
-                await update(preflightData);
-            }
+            await update(preflightData);
 
             setTimeout( async function(){
 
@@ -165,7 +168,6 @@ export default {
             data,
             beacon,
             hashes,
-            offline,
         };
     },
 };

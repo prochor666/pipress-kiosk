@@ -4,31 +4,32 @@ export const useApi = function() {
 
     const getDeviceData = async function (apiUrl) {
 
-        try {
-
-            const data = {
-                clock: {},
-                media: {
-                    url: '',
-                    files: [],
-                },
-                currencies: {},
-                weather: {},
-                index: 0,
-                video: '',
-                rest: {
-                    geo: {
-                        geoip: {
-                            ip: '',
-                            city: '',
-                            location: {
-                                time_zone: '',
-                            },
+        const data = {
+            clock: {},
+            media: {
+                url: '',
+                files: [],
+            },
+            currencies: {},
+            weather: {},
+            index: 0,
+            video: '',
+            rest: {
+                geo: {
+                    geoip: {
+                        ip: '',
+                        city: '',
+                        location: {
+                            time_zone: '',
                         },
                     },
                 },
-                lang: 'en',
-            };
+            },
+            lang: 'en',
+            offline: true,
+        };
+
+        try {
 
             const result = await axios.get(`${apiUrl}`, {
                 headers: {
@@ -86,11 +87,13 @@ export const useApi = function() {
                     data.widgets = widgets;
                 }
 
+                data.offline = false;
                 return data;
             }
 
         } catch (e) {
 
+            data.offline = true;
             console.log('Data error', e);
         }
 

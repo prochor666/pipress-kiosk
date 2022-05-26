@@ -1,5 +1,5 @@
 <template>
-    <div class="relative min-h-screen bg-black">
+    <div class="bg-black">
         <Suspense>
             <template #default>
                 <router-view></router-view>
