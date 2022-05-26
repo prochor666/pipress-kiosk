@@ -36,9 +36,6 @@
 import utils from '../composables/utils';
 
 export default {
-    components: {
-    },
-
     props: {
         weather: {
             type: Object,

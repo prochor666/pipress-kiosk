@@ -10,9 +10,9 @@
 
             <div class="p-0" v-for="currency, index in filtered" :key="currency.code">
                 <!-- <div :class="[index < (filtered.length / 2) ? 'text-right': 'text-left', 'text-3xl grid grid-cols-2']"> -->
-                <div class="text-lg md:text-2xl lg:text-3xl grid grid-cols-2 gap-0">
+                <div class="text-lg md:text-2xl lg:text-3xl lg:leading-relaxed grid grid-cols-2 gap-0">
                     <div class="text-right">
-                        {{ currency.code }} ({{ currency.country }}):
+                        {{ currency.amount }} {{ currency.code }}:
                     </div>
                     <div class="text-emerald-400 text-left pl-2">
                         {{ currency.rate }} {{ config.czk }}
@@ -28,9 +28,6 @@
 import utils from '../composables/utils';
 
 export default {
-    components: {
-    },
-
     props: {
         currencies: {
             type: Object,

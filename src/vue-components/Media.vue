@@ -12,9 +12,6 @@ import { ref } from 'vue';
 import utils from '../composables/utils';
 
 export default {
-    components: {
-    },
-
     props: {
         media: {
             type: Object,
