@@ -9,7 +9,6 @@
         <div class="grid grid-rows-4 grid-flow-col gap-2 text-center mx-auto pt-3" v-if="filtered.length > 0">
 
             <div class="p-0" v-for="currency, index in filtered" :key="currency.code">
-                <!-- <div :class="[index < (filtered.length / 2) ? 'text-right': 'text-left', 'text-3xl grid grid-cols-2']"> -->
                 <div class="text-lg md:text-2xl lg:text-3xl lg:leading-relaxed grid grid-cols-2 gap-0">
                     <div class="text-right">
                         {{ currency.amount }} {{ currency.code }}:
@@ -66,20 +65,6 @@ export default {
                 filtered.push(utils().copyData(currencies[currency]));
             }
         }
-
-        //console.log(`Setting up currences`, filtered);
-
-/*
-        for (let currency in allCurrencies) {
-
-           // console.log(`Currency ${currency} in`, (config[lang].currencies).includes(currency))
-
-            if ((config[lang].currencies).includes(currency)) {
-
-                currencies.push(utils().copyData(allCurrencies[currency]));
-            }
-        }
-*/
 
         return {
             filtered,
