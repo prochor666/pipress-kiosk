@@ -13,7 +13,7 @@ export default {
 
     async setup() {
         const current = 'default.mp4';
-        const local_url = 'public/offline';
+        const local_url = 'offline';
         const enabled = true;
 
         return {

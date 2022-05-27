@@ -101,6 +101,7 @@ export const useApi = function() {
     };
 
     return {
+
         getDeviceData,
     };
 };

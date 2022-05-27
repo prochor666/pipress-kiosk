@@ -66,7 +66,7 @@ export default {
         };
 
         const type = ref(chooseType(current.value));
-        console.log(`Current video ${current.value}`);
+        console.log(`Current video ${local_url}/${current.value}`);
 
         return {
             nextItem,

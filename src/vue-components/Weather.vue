@@ -50,7 +50,7 @@ export default {
     async setup(props, { emit }) {
         const weather = props.weather;
         const lang = props.lang;
-        const local_url = 'public/weather_icons';
+        const local_url = 'weather_icons';
 
         const config = {
             cs : {
