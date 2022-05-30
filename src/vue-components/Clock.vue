@@ -2,16 +2,16 @@
 <template>
     <div class="text-gray-400 w-full min-h-full flex flex-col justify-center content-center transition-all ease-in-out duration-300 scale-100 text-base">
 
-        <div class="text-4xl md:text-5xl lg:text-6xl text-center pt-1">
-            <div class="inline-block p-1 w-12 md:w-14 lg:w-20 text-center">{{ clock.hours }}</div>
+        <div class="text-3xl md:text-5xl lg:text-6xl text-center pt-1">
+            <div class="inline-block p-1 w-10 md:w-14 lg:w-20 text-center">{{ clock.hours }}</div>
             <div class="inline-block p-1 w-4 text-center">:</div>
-            <div class="inline-block p-1 w-12 md:w-14 lg:w-20 text-center">{{ clock.minutes }}</div>
+            <div class="inline-block p-1 w-10 md:w-14 lg:w-20 text-center">{{ clock.minutes }}</div>
             <div class="inline-block p-1 w-4 text-center">:</div>
-            <div class="inline-block p-1 w-12 md:w-14 lg:w-20 text-center">{{ clock.seconds }}</div>
+            <div class="inline-block p-1 w-10 md:w-14 lg:w-20 text-center">{{ clock.seconds }}</div>
         </div>
 
-        <div class="text-2xl md:text-3xl lg:text-4xl font-medium text-center">
-            <div class="inline-block pt-2 mx-auto vertical:text-purple-600">
+        <div class="text-xl md:text-3xl lg:text-4xl font-medium text-center">
+            <div class="inline-block pt-1 md:pt-2 mx-auto vertical:text-purple-600">
                 {{ clock.dayOfWeek }}, {{ clock.day }}. {{ clock.month }}
             </div>
         </div>

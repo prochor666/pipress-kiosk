@@ -2,14 +2,14 @@
 
     <div class="text-gray-400 text-center" v-if="filtered.length > 0">
 
-        <div class="text-3xl md:text-4xl lg:text-4xl py-4 text-center">
+        <div class="text-xl md:text-4xl lg:text-4xl pt-6 md:pt-4 text-center">
             {{ config.title }}
         </div>
 
-        <div class="grid grid-rows-4 grid-flow-col gap-2 text-center mx-auto pt-3" v-if="filtered.length > 0">
+        <div class="grid grid-rows-4 grid-flow-col gap-1 md:gap-2 text-center mx-auto pt-3" v-if="filtered.length > 0">
 
             <div class="p-0" v-for="currency, index in filtered" :key="currency.code">
-                <div class="text-lg md:text-2xl lg:text-3xl lg:leading-relaxed grid grid-cols-2 gap-0">
+                <div class="text-sm md:text-2xl lg:text-3xl lg:leading-relaxed grid grid-cols-2 gap-0">
                     <div class="text-right">
                         {{ currency.amount }} {{ currency.code }}:
                     </div>

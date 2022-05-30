@@ -3,28 +3,28 @@
 
         <div class="text-center">
 
-            <div class="inline-block text-3xl md:text-4xl lg:text-4xl pb-2">
+            <div class="inline-block text-xl md:text-4xl lg:text-4xl pt-2 md:pt-0 md:pb-2">
                 {{ config.title }}
             </div>
 
-            <div class="text-2xl md:text-3xl lg:text-4xl pt-3">
+            <div class="text-lg md:text-3xl lg:text-4xl pt-3">
                 {{ config.temp }}: {{ Math.round(weather.main.temp) }} <span v-html="config.tempUnit"></span>
-                <span :style="`color: ${getRandomColor()}`" class="ml-3 mr-2 inline-block h-10">&bull;</span>
+                <span :style="`color: ${getRandomColor()}`" class="ml-3 mr-2 inline-block h-8 md:h-10">&bull;</span>
                 {{ config.feels_like }}: {{ Math.round(weather.main.feels_like) }} <span v-html="config.tempUnit"></span>
             </div>
 
-            <div class="text-2xl md:text-3xl lg:text-4xl md:my-1 lg:mt-4">
-                <div class="flex justify-center h-10 lg:h-14">
-                    <img :src="`${local_url}/${weather.weather[0].icon}.svg`" class="lg:-mt-1 inline h-10 lg:h-14" />
-                    <span class="inline-block h-10 lg:h-14 font-medium">{{ weather.weather[0].description }}</span>
-                    <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-10 lg:h-14">&bull;</span>
-                    <span class="h-10 lg:h-14">{{ config.wind }}: {{ weather.wind.speed }} {{ config.windUnit }}</span>
+            <div class="text-lg md:text-3xl lg:text-4xl md:my-1 lg:mt-4">
+                <div class="flex justify-center h-8 md:h-10 lg:h-14">
+                    <img :src="`${local_url}/${weather.weather[0].icon}.svg`" class="lg:-mt-1 inline h-8 md:h-10 lg:h-14" />
+                    <span class="inline-block h-8 md:h-10 lg:h-14 font-medium">{{ weather.weather[0].description }}</span>
+                    <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-8 md:h-10 lg:h-14">&bull;</span>
+                    <span class="h-8 md:h-10 lg:h-14">{{ config.wind }}: {{ weather.wind.speed }} {{ config.windUnit }}</span>
                 </div>
             </div>
 
-            <div class="text-2xl md:text-3xl lg:text-4xl">
+            <div class="text-lg md:text-3xl lg:text-4xl">
                 {{ config.pressure }}: {{ weather.main.pressure }} {{ config.pressureUnit }}
-                <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-10">&bull;</span>
+                <span :style="`color: ${getRandomColor()}`" class="mx-3 inline-block h-8 md:h-10">&bull;</span>
                 {{ config.humidity }}: {{ weather.main.humidity }} %
             </div>
 

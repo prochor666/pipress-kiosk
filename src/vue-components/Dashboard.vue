@@ -1,7 +1,7 @@
 <template>
 
     <!-- cursor-none -->
-    <main class="p-0 m-0 text-center h-screen max-h-screen aspect-[9/16]">
+    <main class="p-0 m-0 text-center h-screen max-h-screen">
 
         <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base">
 
