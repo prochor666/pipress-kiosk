@@ -3,7 +3,11 @@
     <!-- cursor-none -->
     <main class="p-0 m-0 text-center h-screen max-h-screen">
 
-        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base" v-if="activity.active === true">
+        <div class="w-screen h-screen max-h-screen min-h-screen font-sans text-base fixed z-1000" v-if="activity.active === false">
+                <Black />
+        </div>
+
+        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base">
 
             <Indicator :beacon="beacon" :offline="data.offline" :key="hashes.offline" />
 
@@ -29,9 +33,6 @@
 
         </div>
 
-        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base" v-if="activity.active === false">
-                <Black />
-        </div>
     </main>
 
 </template>
@@ -185,11 +186,13 @@ export default {
 
             activity.active = preflightData.active || false;
 
+            const timeout = activity.active === true ? 60000: 2000;
+            console.log(activity.active, timeout);
             setTimeout( async function(){
 
                 await asvc.postMessage(apiUrl);
 
-            }, 2000);
+            }, timeout);
         }
 
 
