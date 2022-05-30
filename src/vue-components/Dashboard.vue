@@ -3,7 +3,7 @@
     <!-- cursor-none -->
     <main class="p-0 m-0 text-center h-screen max-h-screen">
 
-        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base">
+        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base" v-if="activity.active === true">
 
             <Indicator :beacon="beacon" :offline="data.offline" :key="hashes.offline" />
 
@@ -28,8 +28,11 @@
             </div>
 
         </div>
-    </main>
 
+        <div class="w-full h-screen max-h-screen min-h-screen font-sans text-base" v-if="activity.active === false">
+                <Black />
+        </div>
+    </main>
 
 </template>
 
@@ -40,16 +43,19 @@ document.documentElement.classList.add('vertical');
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import Indicator from './Indicator.vue';
+import Black from './Black.vue';
 import Offline from './Offline.vue';
 import Media from './Media.vue';
 import Clock from '../vue-components/Clock.vue';
 import Currencies from '../vue-components/Currencies.vue';
 import Weather from '../vue-components/Weather.vue';
 import apiWorker from '../api.worker.js?worker';
+import activityWorker from '../activity.worker.js?worker';
 import objectHash from 'object-hash';
 import utils from '../composables/utils';
 
 const svc = new apiWorker();
+const asvc = new activityWorker();
 
 export default {
     components: {
@@ -59,11 +65,12 @@ export default {
         Media,
         Weather,
         Offline,
+        Black,
     },
 
     async setup() {
         const route = useRoute();
-        const apiUrl = route.meta.apiUrl;
+        const apiUrl = '';
         const appPrefix = route.meta.appPrefix;
         const beacon = reactive({
             loading: false,
@@ -73,6 +80,13 @@ export default {
 
         // Initialize worker
         svc.postMessage(apiUrl);
+        asvc.postMessage(apiUrl);
+
+
+        const activity = reactive({
+            active: false
+        });
+
 
         const data = reactive({
             clock: { ready: false },
@@ -164,8 +178,24 @@ export default {
             }, 20000);
         }
 
+
+        asvc.onmessage = async (e) => {
+
+            const preflightData = await e.data;
+
+            activity.active = preflightData.active || false;
+
+            setTimeout( async function(){
+
+                await asvc.postMessage(apiUrl);
+
+            }, 2000);
+        }
+
+
         return {
             data,
+            activity,
             beacon,
             hashes,
         };

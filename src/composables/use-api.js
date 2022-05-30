@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const useApi = function() {
 
-    const getDeviceData = async function (apiUrl) {
+    const getDeviceData = async function () {
 
         const data = {
             clock: {},
@@ -31,7 +31,7 @@ export const useApi = function() {
 
         try {
 
-            const result = await axios.get(`${apiUrl}`, {
+            const result = await axios.get('/json/device.json', {
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -100,9 +100,47 @@ export const useApi = function() {
         return data;
     };
 
-    return {
 
+    const getDeviceActivity = async function (apiUrl) {
+
+        const data = {
+            active: false
+        };
+
+        try {
+
+            const result = await axios.get('/json/activity.json', {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+
+            if (typeof (result) === 'object' && result.data && result.data.active) {
+
+                let {
+                    active: active = false,
+                } = result.data;
+
+                if (active) {
+
+                    data.active = active;
+                }
+
+                return data;
+            }
+
+        } catch (e) {
+
+            data.active = false;
+        }
+
+        return data;
+    };
+
+
+    return {
         getDeviceData,
+        getDeviceActivity,
     };
 };
 
