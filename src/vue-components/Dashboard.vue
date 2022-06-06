@@ -72,7 +72,7 @@ export default {
     async setup() {
         const route = useRoute();
         const apiUrl = '';
-        const appPrefix = route.meta.appPrefix;
+        const appPrefix = 'pipress';
         const beacon = reactive({
             loading: false,
             key: utils().getRndKey(),
