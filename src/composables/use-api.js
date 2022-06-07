@@ -10,7 +10,10 @@ export const useApi = function() {
                 url: '',
                 files: [],
             },
-            currencies: {},
+            currencies: {
+                data: {},
+                lang: 'en',
+            },
             weather: {},
             index: 0,
             video: '',
@@ -26,6 +29,7 @@ export const useApi = function() {
                 },
             },
             lang: 'en',
+            units: 'imperial',
             offline: true,
         };
 
@@ -41,6 +45,7 @@ export const useApi = function() {
 
                 let {
                     lang,
+                    units,
                     layout: {
                         orientation: orientation = 'vertical',
                         widgets: widgets = [],
@@ -77,6 +82,10 @@ export const useApi = function() {
                 if (lang) {
 
                     data.lang = lang;
+                }
+                if (units) {
+
+                    data.units = units;
                 }
                 if (orientation) {
 

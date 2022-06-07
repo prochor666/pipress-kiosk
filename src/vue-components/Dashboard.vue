@@ -16,7 +16,7 @@
             </div>
 
             <div class="p-0 h-[15%]" v-if="data.offline === false">
-                <Weather :weather="data.weather" :lang="data.lang" :key="hashes.weather" />
+                <Weather :weather="data.weather" :lang="data.lang" :units="data.units" :key="hashes.weather" />
             </div>
 
             <div class="p-0 h-[20%]" v-if="data.offline === false">
@@ -83,7 +83,6 @@ export default {
         svc.postMessage(apiUrl);
         asvc.postMessage(apiUrl);
 
-
         const activity = reactive({
             active: false
         });
@@ -95,7 +94,10 @@ export default {
                 url: '',
                 files: [],
             },
-            currencies: {},
+            currencies: {
+                data: {},
+                lang: 'en',
+            },
             weather: {},
             index: 0,
             video: '',
@@ -111,6 +113,7 @@ export default {
                 },
             },
             lang: 'en',
+            units: 'imperial',
             offline: false,
         });
 
@@ -187,7 +190,8 @@ export default {
             activity.active = preflightData.active || false;
 
             const timeout = activity.active === true ? 60000: 2000;
-            console.log(activity.active, timeout);
+            //console.log(activity.active, timeout);
+
             setTimeout( async function(){
 
                 await asvc.postMessage(apiUrl);

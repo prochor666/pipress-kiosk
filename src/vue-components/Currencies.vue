@@ -30,7 +30,10 @@ export default {
     props: {
         currencies: {
             type: Object,
-            default: {},
+            default: {
+                data: {},
+                lang: 'en',
+            },
         },
         lang: {
             type: String,
@@ -40,7 +43,7 @@ export default {
 
     async setup(props, { emit }) {
         const lang = props.lang;
-        let currencies = props.currencies;
+        const currencies = props.currencies;
         const filtered = [];
 
         const config = {
@@ -60,11 +63,13 @@ export default {
 
         for (let currency of config[lang].currencies) {
 
-            if (currencies.hasOwnProperty(currency)) {
+            if (currencies.data.hasOwnProperty(currency)) {
 
-                filtered.push(utils().copyData(currencies[currency]));
+                filtered.push(utils().copyData(currencies.data[currency]));
             }
         }
+
+        console.table(filtered);
 
         return {
             filtered,

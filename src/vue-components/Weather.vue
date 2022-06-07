@@ -44,48 +44,73 @@ export default {
         lang: {
             type: String,
             default: 'en',
+        },
+        units: {
+            type: String,
+            default: 'imperial',
         }
     },
 
     async setup(props, { emit }) {
         const weather = props.weather;
         const lang = props.lang;
+        const units = props.units;
         const local_url = 'weather_icons';
+
+        const getUnits = function (units, key) {
+
+            const src = {
+                imperial: {
+                    temp: '&deg;F',
+                    pressure: 'hPa',
+                    windSpeed: 'mph',
+                },
+                metric: {
+                    temp: '&deg;C',
+                    pressure: 'hPa',
+                    windSpeed: 'm/s',
+                }
+            }
+
+            return src[units][key];
+        }
+
 
         const config = {
             cs : {
                 title: 'Počasí',
                 weatherUrlFix: 'cz',
-                units: 'metric',
+                units: units,
                 temp: 'Teplota',
                 feels_like: 'Pocitová',
                 pressure: 'Tlak',
                 humidity: 'Vlhkost',
                 wind: 'Vítr',
                 clouds: 'Oblačnost',
-                tempUnit: '&deg;C',
-                pressureUnit: 'hPa',
-                windUnit: 'm/s',
+                tempUnit: getUnits(units, 'temp'),
+                pressureUnit: getUnits(units, 'pressure'),
+                windUnit: getUnits(units, 'windSpeed'),
             },
 
             en : {
                 title: 'Weather',
                 weatherUrlFix: 'en',
-                units: 'imperial',
+                units: units,
                 temp: 'Temperature',
                 feels_like: 'Feels like',
                 pressure: 'Pressure',
                 humidity: 'Humidity',
                 wind: 'Vind speed',
                 clouds: 'Clouds',
-                tempUnit: '&deg;F',
-                pressureUnit: 'hPa',
-                windUnit: 'mph',
+                tempUnit: getUnits(units, 'temp'),
+                pressureUnit: getUnits(units, 'pressure'),
+                windUnit: getUnits(units, 'windSpeed'),
             },
         };
 
         return {
             weather,
+            units,
             config: config[lang],
             getRandomColor: utils().getRandomColor,
             local_url,
