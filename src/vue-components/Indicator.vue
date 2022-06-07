@@ -1,7 +1,6 @@
 
 <template>
     <span v-if="beacon.loading === true">
-        <!-- <span class="absolute right-12 top-4 text-sky-600 ">{{ beacon.ip }}</span> -->
         <span class="animate-ping duration-1000 absolute right-4 top-4 inline-flex h-4 w-4 rounded-full bg-sky-600 opacity-75"></span>
         <span class="absolute right-4 top-4 w-4 h-4 text-sky-600">
             <WifiIcon class="w-4 h-4" />
