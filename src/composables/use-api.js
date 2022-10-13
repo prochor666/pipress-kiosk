@@ -97,6 +97,7 @@ export const useApi = function() {
                 }
 
                 data.offline = false;
+                console.log('Request at /json/device.json', data);
                 return data;
             }
 
@@ -143,6 +144,7 @@ export const useApi = function() {
             data.active = false;
         }
 
+        console.log('Request at /json/activity.json', data);
         return data;
     };
 

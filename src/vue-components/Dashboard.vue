@@ -40,7 +40,6 @@
 <script>
 document.documentElement.classList.add('vertical');
 
-
 import { reactive } from 'vue';
 import { useRoute } from 'vue-router';
 import Indicator from './Indicator.vue';
