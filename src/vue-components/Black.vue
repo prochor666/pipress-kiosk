@@ -4,15 +4,7 @@
     </div>
 </template>
 
-<script>
-export default {
-
-    async setup() {
-
-        return {
-        };
-    },
-};
+<script setup>
 </script>
 
 <style></style>

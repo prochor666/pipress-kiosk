@@ -5,24 +5,10 @@
 
 </template>
 
-<script>
-import { ref } from 'vue';
-import utils from '../composables/utils';
-
-export default {
-
-    async setup() {
-        const current = 'default.mp4';
-        const local_url = 'offline';
-        const enabled = true;
-
-        return {
-            current,
-            local_url,
-            enabled,
-        };
-    },
-};
+<script setup>
+const current = 'default.mp4';
+const local_url = 'offline';
+const enabled = true;
 </script>
 
 <style></style>
